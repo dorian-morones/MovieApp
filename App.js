@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,8 +16,16 @@ import {
   StatusBar,
 } from 'react-native';
 import Home from './src/views/Home';
+import VideoSuggestion from './src/components/videos/VideoSuggestion';
+import API from './src/Utils/api';
 
 const App: () => React$Node = () => {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    setMovies(API.getSuggestion(1));
+  }, []);
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -32,6 +40,7 @@ const App: () => React$Node = () => {
           )}
           <View>
             <Home />
+            <VideoSuggestion data={movies} />
           </View>
         </ScrollView>
       </SafeAreaView>
